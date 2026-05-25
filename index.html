@@ -1,10 +1,765 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Hello</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Engineer — Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Syne:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0d1117;
+      --bg2:       #161b22;
+      --bg3:       #21262d;
+      --surface:   #1c2128;
+      --border:    #30363d;
+      --muted:     #8b949e;
+      --text:      #e6edf3;
+      --text-dim:  #c9d1d9;
+      --accent:    #58a6ff;
+      --accent2:   #3fb950;
+      --accent3:   #f78166;
+      --gold:      #d29922;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Syne', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── Noise overlay ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Grid lines ── */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 48px 48px;
+      opacity: 0.15;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 3rem;
+      background: rgba(13, 17, 23, 0.75);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.82rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 0 3rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .hero-inner { max-width: 720px; }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--accent2);
+      border: 1px solid rgba(63,185,80,0.3);
+      border-radius: 2px;
+      padding: 0.3rem 0.7rem;
+      margin-bottom: 2rem;
+      animation: fadeUp 0.6s both;
+    }
+    .hero-tag::before {
+      content: '●';
+      animation: pulse 1.8s infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity: 1; }
+      50%      { opacity: 0.3; }
+    }
+
+    .hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      animation: fadeUp 0.6s 0.1s both;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      margin-top: 1.5rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 1rem;
+      color: var(--muted);
+      line-height: 1.7;
+      animation: fadeUp 0.6s 0.2s both;
+    }
+    .hero-sub span { color: var(--accent3); }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2.5rem;
+      flex-wrap: wrap;
+      animation: fadeUp 0.6s 0.3s both;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.82rem;
+      letter-spacing: 0.06em;
+      text-decoration: none;
+      border-radius: 3px;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: var(--bg);
+      border: none;
+    }
+    .btn-primary:hover {
+      background: #79b8ff;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(88,166,255,0.25);
+    }
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-dim);
+      border: 1px solid var(--border);
+    }
+    .btn-ghost:hover {
+      border-color: var(--muted);
+      color: var(--text);
+      transform: translateY(-2px);
+    }
+
+    /* Glow blob */
+    .hero-glow {
+      position: absolute;
+      right: -80px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 520px;
+      height: 520px;
+      background: radial-gradient(ellipse, rgba(88,166,255,0.08) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── SECTION BASE ── */
+    section {
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 6rem 3rem;
+    }
+
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    .section-divider {
+      width: 40px;
+      height: 1px;
+      background: var(--accent);
+      margin-bottom: 3rem;
+    }
+
+    /* ── SKILLS ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .skill-card {
+      background: var(--bg2);
+      padding: 1.8rem;
+      transition: background 0.2s;
+    }
+    .skill-card:hover { background: var(--surface); }
+
+    .skill-icon {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .skill-card h3 {
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.5rem;
+    }
+
+    .skill-card p {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 1rem;
+    }
+
+    .tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      padding: 0.2rem 0.55rem;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+    .tag.accent { border-color: rgba(88,166,255,0.4); color: var(--accent); }
+    .tag.green  { border-color: rgba(63,185,80,0.4);  color: var(--accent2); }
+    .tag.red    { border-color: rgba(247,129,102,0.4);color: var(--accent3); }
+
+    /* ── PROJECTS ── */
+    .projects-list { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); }
+
+    .project-item {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: start;
+      gap: 2rem;
+      background: var(--bg2);
+      padding: 2rem 2rem;
+      transition: background 0.2s;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+    }
+    .project-item:hover { background: var(--surface); }
+
+    .proj-left {}
+
+    .proj-meta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .proj-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+
+    .proj-status {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 2px;
+    }
+    .proj-status.live   { background: rgba(63,185,80,0.1);  color: var(--accent2); border: 1px solid rgba(63,185,80,0.3); }
+    .proj-status.wip    { background: rgba(210,153,34,0.1); color: var(--gold);    border: 1px solid rgba(210,153,34,0.3); }
+    .proj-status.open   { background: rgba(88,166,255,0.1); color: var(--accent);  border: 1px solid rgba(88,166,255,0.3); }
+
+    .project-item h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .project-item p {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.65;
+      max-width: 560px;
+    }
+
+    .proj-arrow {
+      font-size: 1.2rem;
+      color: var(--muted);
+      transition: transform 0.2s, color 0.2s;
+      margin-top: 0.2rem;
+    }
+    .project-item:hover .proj-arrow { transform: translate(4px, -4px); color: var(--accent); }
+
+    /* ── EXPERIENCE ── */
+    .timeline { position: relative; padding-left: 1.5rem; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 8px; bottom: 8px;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+    }
+
+    .tl-item {
+      position: relative;
+      padding: 0 0 3rem 2rem;
+    }
+    .tl-item::before {
+      content: '';
+      position: absolute;
+      left: -4px;
+      top: 8px;
+      width: 9px; height: 9px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 1px solid var(--accent);
+    }
+
+    .tl-date {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .tl-role {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.3rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .tl-company {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.82rem;
+      color: var(--accent);
+      margin-bottom: 0.8rem;
+    }
+
+    .tl-desc {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.77rem;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 560px;
+    }
+
+    /* ── CONTACT ── */
+    .contact-box {
+      border: 1px solid var(--border);
+      background: var(--bg2);
+      padding: 3rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    .contact-left p {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.75;
+      margin-top: 1rem;
+      max-width: 380px;
+    }
+
+    .contact-links { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.2rem;
+      background: var(--bg2);
+      text-decoration: none;
+      color: var(--text-dim);
+      transition: background 0.2s, color 0.2s;
+      font-size: 0.82rem;
+      letter-spacing: 0.04em;
+    }
+    .contact-link:hover { background: var(--surface); color: var(--accent); }
+
+    .contact-link-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 2rem 3rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    footer p {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+    footer span { color: var(--accent); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .hero, section, footer { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .contact-box { grid-template-columns: 1fr; }
+      .hero-glow { display: none; }
+    }
+  </style>
 </head>
 <body>
-  <h1>Hello World</h1>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">// AI_ENG.portfolio</div>
+    <ul class="nav-links">
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-inner">
+      <div class="hero-tag">Available for opportunities</div>
+      <h1>Building<br/><em>intelligent</em><br/>systems.</h1>
+      <p class="hero-sub">
+        AI Engineer crafting <span>production-ready ML pipelines</span>,<br/>
+        LLM applications, and data-driven products.
+      </p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#projects">View Projects →</a>
+        <a class="btn btn-ghost" href="#contact">Get in Touch</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="reveal">
+      <div class="section-label">// 01 — Expertise</div>
+      <h2 class="section-title">What I Build</h2>
+      <div class="section-divider"></div>
+    </div>
+    <div class="skills-grid reveal">
+      <div class="skill-card">
+        <div class="skill-icon">🤖</div>
+        <h3>LLM Engineering</h3>
+        <p>Fine-tuning, RAG pipelines, prompt engineering and agentic systems using modern foundation models.</p>
+        <div class="skill-tags">
+          <span class="tag accent">LangChain</span>
+          <span class="tag accent">LlamaIndex</span>
+          <span class="tag accent">OpenAI API</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🧠</div>
+        <h3>Machine Learning</h3>
+        <p>End-to-end model development: data preprocessing, training, evaluation and deployment at scale.</p>
+        <div class="skill-tags">
+          <span class="tag green">PyTorch</span>
+          <span class="tag green">scikit-learn</span>
+          <span class="tag green">HuggingFace</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">⚙️</div>
+        <h3>MLOps & Infra</h3>
+        <p>Building robust, observable ML infrastructure — from experiment tracking to CI/CD pipelines.</p>
+        <div class="skill-tags">
+          <span class="tag red">MLflow</span>
+          <span class="tag red">Docker</span>
+          <span class="tag red">Kubernetes</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">📊</div>
+        <h3>Data Engineering</h3>
+        <p>Designing scalable data pipelines, feature stores, and analytics platforms for high-volume workloads.</p>
+        <div class="skill-tags">
+          <span class="tag">Spark</span>
+          <span class="tag">Airflow</span>
+          <span class="tag">dbt</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🔗</div>
+        <h3>API & Backend</h3>
+        <p>Deploying ML models as reliable, low-latency REST and streaming APIs with proper observability.</p>
+        <div class="skill-tags">
+          <span class="tag accent">FastAPI</span>
+          <span class="tag accent">Python</span>
+          <span class="tag accent">Redis</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">☁️</div>
+        <h3>Cloud Platforms</h3>
+        <p>Deploying and scaling AI systems on major cloud providers with cost and latency optimization.</p>
+        <div class="skill-tags">
+          <span class="tag green">AWS SageMaker</span>
+          <span class="tag green">GCP Vertex</span>
+          <span class="tag green">Azure ML</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="reveal">
+      <div class="section-label">// 02 — Work</div>
+      <h2 class="section-title">Selected Projects</h2>
+      <div class="section-divider"></div>
+    </div>
+    <div class="projects-list reveal">
+      <a class="project-item" href="#">
+        <div class="proj-left">
+          <div class="proj-meta">
+            <span class="proj-num">001</span>
+            <span class="proj-status live">● Live</span>
+          </div>
+          <h3>Enterprise RAG Platform</h3>
+          <p>A retrieval-augmented generation system for internal knowledge management. Ingests 50k+ documents, supports multi-modal queries, achieves sub-300ms response time.</p>
+          <div class="skill-tags" style="margin-top:1rem">
+            <span class="tag">LangChain</span><span class="tag">pgvector</span><span class="tag">FastAPI</span><span class="tag">React</span>
+          </div>
+        </div>
+        <div class="proj-arrow">↗</div>
+      </a>
+      <a class="project-item" href="#">
+        <div class="proj-left">
+          <div class="proj-meta">
+            <span class="proj-num">002</span>
+            <span class="proj-status live">● Live</span>
+          </div>
+          <h3>Real-Time Fraud Detection</h3>
+          <p>ML pipeline processing 1M+ transactions/day with gradient boosting ensemble, feature engineering layer, and sub-50ms latency. 98.4% precision on production data.</p>
+          <div class="skill-tags" style="margin-top:1rem">
+            <span class="tag">XGBoost</span><span class="tag">Kafka</span><span class="tag">Redis</span><span class="tag">Grafana</span>
+          </div>
+        </div>
+        <div class="proj-arrow">↗</div>
+      </a>
+      <a class="project-item" href="#">
+        <div class="proj-left">
+          <div class="proj-meta">
+            <span class="proj-num">003</span>
+            <span class="proj-status wip">◐ In progress</span>
+          </div>
+          <h3>Multimodal Document Agent</h3>
+          <p>Autonomous AI agent that understands PDFs, charts, and tables to answer complex analytical queries. Built with tool-use and chain-of-thought reasoning.</p>
+          <div class="skill-tags" style="margin-top:1rem">
+            <span class="tag">GPT-4o</span><span class="tag">LlamaIndex</span><span class="tag">Anthropic API</span>
+          </div>
+        </div>
+        <div class="proj-arrow">↗</div>
+      </a>
+      <a class="project-item" href="#">
+        <div class="proj-left">
+          <div class="proj-meta">
+            <span class="proj-num">004</span>
+            <span class="proj-status open">◎ Open Source</span>
+          </div>
+          <h3>ml-pipeline-toolkit</h3>
+          <p>A lightweight Python library for building reproducible ML experiments with declarative config, auto-logging, and Weights & Biases integration. 800+ GitHub stars.</p>
+          <div class="skill-tags" style="margin-top:1rem">
+            <span class="tag">Python</span><span class="tag">MLflow</span><span class="tag">W&amp;B</span><span class="tag">Poetry</span>
+          </div>
+        </div>
+        <div class="proj-arrow">↗</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="reveal">
+      <div class="section-label">// 03 — History</div>
+      <h2 class="section-title">Experience</h2>
+      <div class="section-divider"></div>
+    </div>
+    <div class="timeline reveal">
+      <div class="tl-item">
+        <div class="tl-date">2023 — Present</div>
+        <div class="tl-role">Senior AI Engineer</div>
+        <div class="tl-company">TechCorp Vietnam</div>
+        <p class="tl-desc">Lead AI Engineer responsible for designing and shipping LLM-powered products. Built RAG infrastructure serving 10k daily users. Reduced model serving costs by 40% via quantization and caching strategies.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2021 — 2023</div>
+        <div class="tl-role">Machine Learning Engineer</div>
+        <div class="tl-company">DataSynth Labs</div>
+        <p class="tl-desc">Developed and maintained ML models for e-commerce recommendation and search ranking. Shipped 6 A/B tested models to production, collectively driving a 18% lift in conversion rate.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2019 — 2021</div>
+        <div class="tl-role">Data Scientist</div>
+        <div class="tl-company">Startup Incubator HCM</div>
+        <p class="tl-desc">Early team member at an AI startup. Built NLP text classification and NER systems for Vietnamese language. Established data annotation workflows and evaluation frameworks from scratch.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="reveal">
+      <div class="section-label">// 04 — Connect</div>
+      <h2 class="section-title">Get in Touch</h2>
+      <div class="section-divider"></div>
+    </div>
+    <div class="contact-box reveal">
+      <div class="contact-left">
+        <h3 style="font-family:'DM Serif Display',serif;font-size:1.5rem;">Let's build something<br/><em style="color:var(--accent)">together.</em></h3>
+        <p>Currently open to full-time roles, consulting, and interesting project collaborations in the AI/ML space. Based in Ho Chi Minh City — available remote worldwide.</p>
+      </div>
+      <div>
+        <div class="contact-links">
+          <a class="contact-link" href="mailto:hello@example.com">
+            <div>
+              <div class="contact-link-label">Email</div>
+              <div>hello@yourname.dev</div>
+            </div>
+            <span>↗</span>
+          </a>
+          <a class="contact-link" href="https://github.com" target="_blank">
+            <div>
+              <div class="contact-link-label">GitHub</div>
+              <div>github.com/yourname</div>
+            </div>
+            <span>↗</span>
+          </a>
+          <a class="contact-link" href="https://linkedin.com" target="_blank">
+            <div>
+              <div class="contact-link-label">LinkedIn</div>
+              <div>linkedin.com/in/yourname</div>
+            </div>
+            <span>↗</span>
+          </a>
+          <a class="contact-link" href="https://twitter.com" target="_blank">
+            <div>
+              <div class="contact-link-label">Twitter / X</div>
+              <div>@yourhandle</div>
+            </div>
+            <span>↗</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 <span>YourName</span>. Built with care.</p>
+    <p>Hosted on <span>GitHub Pages</span></p>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 80);
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.08 });
+    reveals.forEach(el => io.observe(el));
+  </script>
 </body>
 </html>
