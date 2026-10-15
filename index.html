@@ -4,1237 +4,498 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Chau Gia Kiet's Portfolio" />
+  <meta name="description"
+    content="Chau Gia Kiet — Data & AI Engineer specializing in Computer Vision, Agentic AI, RAG pipelines, and end-to-end LLM applications." />
   <title>Chau Gia Kiet — Portfolio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link
-    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;650;700&family=Fira+Code:wght@400;500&display=swap"
     rel="stylesheet" />
   <style>
-    *,
-    *::before,
-    *::after {
+    *, *::before, *::after {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
 
     :root {
-      --bg: #0d1117;
-      --bg2: #161b22;
-      --bg3: #21262d;
-      --border: #30363d;
-      --text: #e6edf3;
-      --muted: #8b949e;
-      --blue: #2f81f7;
-      --blue-dim: #1f6feb;
-      --blue-glow: rgba(47, 129, 247, 0.15);
+      color-scheme: dark;
+      --bg: #0c111b;
+      --bg2: #121b29;
+      --bg3: #1a2637;
+      --border: #263449;
+      --text: #e9eef7;
+      --muted: #a4b0c3;
+      --blue: #88b8ff;
+      --blue-dim: #2768d5;
+      --blue-glow: rgba(88, 151, 255, 0.1);
       --white: #ffffff;
-      --green: #3fb950;
+      --green: #74d7ad;
+      --mono: 'Fira Code', monospace;
+      --page-width: 1600px;
+      --page-gutter: clamp(16px, 2.5vw, 48px);
     }
 
     html {
       scroll-behavior: smooth;
-      font-size: 18px;
+      scroll-padding-top: 88px;
+      font-size: 16px;
     }
 
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: 'Poppins', sans-serif;
-      overflow-x: hidden;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      line-height: 1.65;
     }
 
-    ::-webkit-scrollbar {
-      width: 6px;
+    a { color: var(--blue); }
+    button { font: inherit; }
+    img { max-width: 100%; }
+    ::selection { background: #254d82; color: white; }
+    :focus-visible { outline: 2px solid var(--blue); outline-offset: 5px; }
+
+    .page-shell, .nav-inner, .footer-inner {
+      width: calc(100% - var(--page-gutter) * 2);
+      max-width: var(--page-width);
+      margin-inline: auto;
     }
 
-    ::-webkit-scrollbar-track {
-      background: var(--bg);
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: var(--blue-dim);
-      border-radius: 3px;
-    }
-
-    /* NAV */
-    nav {
+    .skip-link {
       position: fixed;
+      top: 8px;
+      left: 16px;
+      z-index: 300;
+      padding: 8px 16px;
+      background: var(--bg2);
+      transform: translateY(-150%);
+    }
+
+    .skip-link:focus { transform: none; }
+
+    nav {
+      position: sticky;
       top: 0;
-      left: 0;
-      right: 0;
       z-index: 200;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 5%;
-      height: 64px;
-      background: rgba(13, 17, 23, 0.92);
-      backdrop-filter: blur(12px);
+      background: rgba(12, 17, 27, 0.95);
+      backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border);
     }
 
+    .nav-inner {
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      position: relative;
+    }
+
     .nav-brand {
-      font-family: 'Fira Code', monospace;
-      font-size: 1.05rem;
-      color: var(--blue);
+      font-family: var(--mono);
+      font-size: 0.95rem;
       font-weight: 500;
       text-decoration: none;
+      white-space: nowrap;
     }
 
-    .nav-menu {
-      display: flex;
-      gap: 0;
-      list-style: none;
-    }
-
+    .nav-menu { display: flex; gap: 6px; list-style: none; }
     .nav-menu a {
       display: block;
-      padding: 0 0.9rem;
-      height: 64px;
-      line-height: 64px;
-      font-size: 0.8rem;
-      font-weight: 500;
-      letter-spacing: 0.03em;
+      padding: 8px 12px;
       color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 500;
       text-decoration: none;
-      border-bottom: 2px solid transparent;
-      transition: color 0.2s, border-color 0.2s;
+      border-radius: 6px;
+      transition: color 0.2s, background 0.2s;
     }
 
-    .nav-menu a:hover {
-      color: var(--white);
-      border-bottom-color: var(--blue);
-    }
+    .nav-menu a:hover, .nav-menu a:focus-visible { color: var(--text); background: var(--bg3); }
+    .nav-menu li:last-child a { color: var(--blue); background: var(--blue-glow); }
 
     .hamburger {
       display: none;
       flex-direction: column;
-      gap: 5px;
-      cursor: pointer;
-      padding: 4px;
-    }
-
-    .hamburger span {
-      width: 24px;
-      height: 2px;
-      background: var(--text);
-      border-radius: 2px;
-    }
-
-    /* HERO */
-    #home {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
       justify-content: center;
-      padding: 80px 5% 60px;
-      position: relative;
-      overflow: hidden;
+      align-items: center;
+      gap: 5px;
+      width: 44px;
+      height: 44px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
     }
 
-    #home::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse 60% 50% at 50% 40%, rgba(47, 129, 247, 0.07) 0%, transparent 70%);
-      pointer-events: none;
+    .hamburger span { width: 20px; height: 2px; background: var(--text); border-radius: 2px; }
+
+    section { padding-block: 40px; border-top: 1px solid var(--border); min-width: 0; }
+    #home {
+      padding-block: 52px 42px;
+      border-top: 0;
+      position: relative;
     }
 
     .hero-inner {
-      display: flex;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 260px;
+      grid-template-areas: 'intro profile';
       align-items: center;
-      gap: 5rem;
-      max-width: 1000px;
-      width: 100%;
-      margin: 0 auto;
+      gap: clamp(32px, 5vw, 80px);
     }
 
-    .hero-avatar-wrap {
-      flex-shrink: 0;
-      position: relative;
-    }
-
-    .hero-avatar {
-      width: 200px;
-      height: 200px;
-      border-radius: 50%;
-      border: 3px solid var(--blue);
-      background: var(--bg3);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 5rem;
-      box-shadow: 0 0 40px rgba(47, 129, 247, 0.2);
-      animation: float 4s ease-in-out infinite;
-    }
-
-    @keyframes float {
-
-      0%,
-      100% {
-        transform: translateY(0)
-      }
-
-      50% {
-        transform: translateY(-10px)
-      }
-    }
-
-    .hero-badge {
-      position: absolute;
-      bottom: 8px;
-      right: 0;
-      background: var(--green);
-      color: #000;
-      font-size: 0.62rem;
-      font-weight: 700;
-      padding: 0.2rem 0.6rem;
-      border-radius: 20px;
-      letter-spacing: 0.08em;
+    .hero-text { grid-area: intro; min-width: 0; }
+    .hero-eyebrow, .section-title .num {
+      font-family: var(--mono);
+      color: var(--blue);
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
-      box-shadow: 0 0 12px rgba(63, 185, 80, 0.4);
     }
 
-    .hero-text {
-      flex: 1;
-    }
-
+    .hero-eyebrow { margin-bottom: 14px; }
     .hero-name {
-      font-size: clamp(2rem, 5vw, 3.2rem);
-      font-weight: 700;
-      line-height: 1.1;
-      margin-bottom: 0.6rem;
+      font-size: clamp(2.25rem, 4.4vw, 4rem);
+      line-height: 1.12;
+      font-weight: 650;
+      letter-spacing: -0.045em;
+      margin-bottom: 12px;
     }
 
-    .hero-name span {
-      color: var(--blue);
-    }
-
-    .hero-typing-wrap {
-      font-size: 1.2rem;
-      color: var(--muted);
-      margin-bottom: 1.5rem;
-      min-height: 2rem;
-    }
-
-    .hero-typing-wrap .prefix {
-      color: var(--text);
-    }
-
-    .typing-cursor {
-      color: var(--blue);
-      animation: blink 0.8s infinite;
-    }
-
-    @keyframes blink {
-
-      0%,
-      100% {
-        opacity: 1
-      }
-
-      50% {
-        opacity: 0
-      }
-    }
-
-    .hero-bio {
-      font-size: 0.97rem;
-      color: var(--muted);
-      line-height: 1.8;
-      margin-bottom: 2rem;
-      max-width: 540px;
-    }
-
-    .hero-bio strong {
-      color: var(--text);
-    }
-
-    .hero-links {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
+    .hero-name span { color: var(--blue); }
+    .hero-role { color: var(--text); font-size: 1.15rem; font-weight: 500; margin-bottom: 14px; }
+    .hero-bio { color: var(--muted); max-width: 72ch; font-size: 1rem; line-height: 1.75; margin-bottom: 20px; }
+    .hero-bio strong { color: var(--text); font-weight: 500; }
+    .hero-links { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
 
     .btn {
       display: inline-flex;
       align-items: center;
-      gap: 0.4rem;
-      padding: 0.6rem 1.4rem;
-      border-radius: 6px;
-      font-size: 0.88rem;
+      justify-content: center;
+      gap: 8px;
+      padding: 9px 16px;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      font-size: 0.85rem;
       font-weight: 500;
       text-decoration: none;
-      transition: all 0.2s;
+      transition: border-color 0.2s, background 0.2s;
     }
 
-    .btn-filled {
-      background: var(--blue);
-      color: #fff;
-      border: 1px solid var(--blue);
-    }
+    .btn-filled { color: #fff; background: var(--blue-dim); border-color: var(--blue-dim); }
+    .btn-filled:hover { background: #3479eb; }
+    .btn-outline { color: var(--text); background: transparent; }
+    .btn-outline:hover { background: var(--bg3); border-color: var(--blue); }
+    .text-link { padding: 9px 8px; font-size: 0.85rem; text-decoration: none; }
+    .text-link:hover { text-decoration: underline; }
 
-    .btn-filled:hover {
-      background: #388bfd;
-      box-shadow: 0 4px 20px rgba(47, 129, 247, 0.3);
-      transform: translateY(-1px);
-    }
-
-    .btn-outline {
-      background: transparent;
-      color: var(--blue);
-      border: 1px solid var(--blue);
-    }
-
-    .btn-outline:hover {
-      background: var(--blue-glow);
-      transform: translateY(-1px);
-    }
-
-    /* SECTION BASE */
-    section {
-      padding: 80px 5%;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .section-title {
-      font-size: 1.6rem;
-      font-weight: 700;
-      margin-bottom: 2.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-    }
-
-    .section-title::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-    }
-
-    .section-title .num {
-      font-family: 'Fira Code', monospace;
-      font-size: 1rem;
-      color: var(--blue);
-    }
-
-    /* SKILLSET */
-    #skillset {
-      border-top: 1px solid var(--border);
-    }
-
-    .skill-groups {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-      gap: 1.5rem;
-    }
-
-    .skill-group {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 1.5rem;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-
-    .skill-group:hover {
-      border-color: var(--blue);
-      box-shadow: 0 0 20px var(--blue-glow);
-    }
-
-    .skill-group-title {
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--blue);
-      margin-bottom: 1rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .skill-sub {
-      margin-bottom: 0.9rem;
-    }
-
-    .skill-sub-label {
-      font-size: 0.72rem;
-      color: var(--muted);
-      font-weight: 500;
-      margin-bottom: 0.4rem;
-      letter-spacing: 0.05em;
-    }
-
-    .skill-pills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.35rem;
-    }
-
-    .pill {
-      font-family: 'Fira Code', monospace;
-      font-size: 0.72rem;
-      padding: 0.2rem 0.55rem;
-      border-radius: 4px;
-      background: var(--bg3);
-      border: 1px solid var(--border);
-      color: var(--text);
-      transition: border-color 0.2s, color 0.2s;
-    }
-
-    .pill:hover {
-      border-color: var(--blue);
-      color: var(--blue);
-    }
-
-    .pill.blue {
-      border-color: rgba(47, 129, 247, 0.4);
-      color: var(--blue);
-    }
-
-    /* RESUME */
-    #resume {
-      border-top: 1px solid var(--border);
-    }
-
-    .resume-goals {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-      margin-bottom: 3rem;
-    }
-
-    .goal-card {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 1.5rem;
-    }
-
-    .goal-card h4 {
-      font-size: 0.8rem;
-      color: var(--blue);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-bottom: 0.6rem;
-    }
-
-    .goal-card p {
-      font-size: 0.92rem;
-      color: var(--muted);
-      line-height: 1.7;
-    }
-
-    .sub-heading {
-      font-size: 1rem;
-      color: var(--blue);
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      margin-bottom: 1.2rem;
-    }
-
-    .edu-card {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 1.8rem;
-      margin-bottom: 2rem;
-    }
-
-    .edu-header {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 1rem;
-      margin-bottom: 1rem;
-    }
-
-    .edu-school {
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: var(--white);
-    }
-
-    .edu-date {
-      font-family: 'Fira Code', monospace;
-      font-size: 0.78rem;
-      color: var(--blue);
-      white-space: nowrap;
-    }
-
-    .edu-degree {
-      font-size: 0.9rem;
-      color: var(--muted);
-      margin-bottom: 0.8rem;
-    }
-
-    .edu-chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem;
-      margin-bottom: 1rem;
-    }
-
-    .edu-chip {
-      font-size: 0.78rem;
-      padding: 0.3rem 0.8rem;
-      border-radius: 20px;
-      background: rgba(47, 129, 247, 0.12);
-      border: 1px solid rgba(47, 129, 247, 0.3);
-      color: #79c0ff;
-    }
-
-    .edu-notes {
-      list-style: none;
-    }
-
-    .edu-notes li {
-      font-size: 0.88rem;
-      color: var(--muted);
-      padding: 0.3rem 0 0.3rem 1.2rem;
-      position: relative;
-      line-height: 1.6;
-    }
-
-    .edu-notes li::before {
-      content: '▸';
-      position: absolute;
-      left: 0;
-      color: var(--blue);
-    }
-
-    .certs-list {
+    .hero-avatar-wrap {
+      grid-area: profile;
       display: flex;
       flex-direction: column;
-      gap: 1rem;
-    }
-
-    .cert-item {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 1.2rem 1.5rem;
-      display: flex;
       align-items: flex-start;
-      gap: 1rem;
+      padding: 22px;
+      border-left: 1px solid var(--border);
+      gap: 12px;
     }
 
-    .cert-year {
-      font-family: 'Fira Code', monospace;
-      font-size: 0.75rem;
-      color: var(--blue);
-      min-width: 36px;
-      margin-top: 0.15rem;
-    }
-
-    .cert-name {
-      font-weight: 600;
-      font-size: 0.92rem;
-      margin-bottom: 0.3rem;
-    }
-
-    .cert-desc {
-      font-size: 0.85rem;
-      color: var(--muted);
-      line-height: 1.6;
-    }
-
-    /* WORK */
-    #work {
-      border-top: 1px solid var(--border);
-    }
-
-    .work-item {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 2rem;
-      margin-bottom: 2rem;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-
-    .work-item:hover {
-      border-color: var(--blue);
-      box-shadow: 0 0 24px var(--blue-glow);
-    }
-
-    .work-header {
-      display: flex;
-      align-items: flex-start;
-      gap: 1.2rem;
-      margin-bottom: 1.2rem;
-    }
-
-    .work-logo {
-      width: 52px;
-      height: 52px;
-      border-radius: 10px;
-      background: var(--bg3);
-      border: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
-      flex-shrink: 0;
-    }
-
-    .work-company {
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: var(--white);
-      margin-bottom: 0.2rem;
-    }
-
-    .work-role-line {
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      flex-wrap: wrap;
-    }
-
-    .work-role {
-      font-size: 0.88rem;
-      color: var(--blue);
-      font-weight: 500;
-    }
-
-    .work-date {
-      font-family: 'Fira Code', monospace;
-      font-size: 0.75rem;
-      color: var(--muted);
-    }
-
-    .work-project {
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 0.8rem;
-    }
-
-    .work-points {
-      list-style: none;
-      margin-bottom: 1.2rem;
-    }
-
-    .work-points li {
-      font-size: 0.88rem;
-      color: var(--muted);
-      padding: 0.35rem 0 0.35rem 1.4rem;
-      position: relative;
-      line-height: 1.7;
-    }
-
-    .work-points li::before {
-      content: '▸';
-      position: absolute;
-      left: 0;
-      color: var(--blue);
-      font-size: 0.75rem;
-      top: 0.5rem;
-    }
-
-    .work-points li strong {
-      color: var(--text);
-    }
-
-    .work-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-    }
-
-    .work-tag {
-      font-size: 0.72rem;
-      padding: 0.2rem 0.6rem;
-      border-radius: 4px;
-      background: rgba(47, 129, 247, 0.1);
-      border: 1px solid rgba(47, 129, 247, 0.25);
-      color: #79c0ff;
-    }
-
-    /* PROJECTS */
-    #projects {
-      border-top: 1px solid var(--border);
-    }
-
-    .projects-intro {
-      font-size: 0.95rem;
-      color: var(--muted);
-      margin-bottom: 2rem;
-      line-height: 1.7;
-    }
-
-    .projects-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-      margin-bottom: 2rem;
-    }
-
-    .proj-card {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 12px;
+    .hero-avatar {
+      width: 128px;
+      height: 128px;
       overflow: hidden;
-      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .proj-card:hover {
-      border-color: var(--blue);
-      transform: translateY(-4px);
-      box-shadow: 0 12px 32px rgba(47, 129, 247, 0.15);
-    }
-
-    .proj-img {
-      height: 160px;
+      border: 1px solid var(--border);
+      border-radius: 18px;
       background: var(--bg3);
-      display: flex;
+    }
+
+    .hero-avatar img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    .hero-badge {
+      display: inline-flex;
       align-items: center;
-      justify-content: center;
-      font-size: 3rem;
+      gap: 7px;
+      color: var(--green);
+      font-size: 0.78rem;
+      font-weight: 500;
+    }
+
+    .hero-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+    .profile-location { color: var(--muted); font-size: 0.78rem; }
+    .section-title { display: flex; align-items: center; gap: 14px; font-size: 1.35rem; font-weight: 600; letter-spacing: -0.025em; margin-bottom: 24px; }
+    .section-title::after { content: ''; height: 1px; width: 48px; background: var(--border); }
+    .sub-heading { color: var(--muted); font-family: var(--mono); font-size: 0.72rem; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 14px; }
+
+    /* A date/company column keeps long experience entries easy to scan. */
+    .work-item {
+      display: grid;
+      grid-template-columns: minmax(210px, 24%) minmax(0, 1fr);
+      column-gap: 32px;
+      padding-block: 24px;
       border-bottom: 1px solid var(--border);
     }
 
-    .proj-body {
-      padding: 1.4rem;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
+    .work-item:last-child { border-bottom: 0; padding-bottom: 0; }
+    .work-item:first-of-type { padding-top: 0; }
+    .work-header { grid-column: 1; grid-row: 1 / span 3; display: flex; align-items: flex-start; gap: 12px; min-width: 0; }
+    .work-header > div:last-child { min-width: 0; }
+    .work-logo { display: grid; place-items: center; width: 36px; height: 36px; flex-shrink: 0; border: 1px solid var(--border); border-radius: 9px; background: var(--bg2); font-size: 1.05rem; }
+    .work-logo-brand { display: flex; align-items: center; justify-content: center; width: 88px; height: 52px; padding: 6px; overflow: hidden; background: #fff; border-color: #dce3ed; text-decoration: none; }
+    .work-logo-brand img { display: block; min-width: 0; min-height: 0; width: 100%; height: 100%; object-fit: contain; }
+    .work-logo-brand:hover { border-color: var(--blue); }
+    .work-company { color: var(--text); font-size: 0.92rem; font-weight: 600; margin-bottom: 5px; line-height: 1.5; }
+    .work-role-line { display: flex; flex-direction: column; align-items: flex-start; gap: 7px; }
+    .work-role { color: var(--blue); font-size: 0.8rem; }
+    .work-date { font-family: var(--mono); font-size: 0.7rem; color: var(--muted); }
+    .work-project, .work-points, .work-tags { grid-column: 2; min-width: 0; }
+    .work-project { font-size: 0.95rem; font-weight: 600; margin-bottom: 10px; }
+    .work-points { list-style: none; margin-bottom: 14px; }
+    .work-points li, .proj-points li, .edu-notes li { position: relative; padding-left: 16px; color: var(--muted); }
+    .work-points li { font-size: 0.91rem; line-height: 1.75; margin-bottom: 7px; }
+    .work-points li::before, .proj-points li::before, .edu-notes li::before { content: '·'; color: var(--blue); font-weight: 700; position: absolute; left: 0; }
+    .work-points li strong, .proj-points li strong { color: var(--text); font-weight: 500; }
+    .work-tags, .skill-pills, .proj-tags-row, .activity-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .work-tag, .pill, .proj-tag, .activity-tag { display: inline-block; font-size: 0.7rem; line-height: 1.5; padding: 4px 8px; border-radius: 5px; border: 1px solid var(--border); color: var(--muted); background: var(--bg3); }
+    .work-tag { background: var(--blue-glow); color: #a7c9ff; border-color: #284367; }
+
+    .projects-intro { color: var(--muted); font-size: 0.9rem; margin-top: -12px; margin-bottom: 20px; }
+    .projects-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; margin-bottom: 20px; }
+    .proj-card { display: flex; flex-direction: column; min-width: 0; background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; transition: border-color 0.2s; }
+    .proj-card:hover { border-color: #48648c; }
+    .proj-img { display: flex; align-items: center; padding: 18px 22px 0; font-size: 1.75rem; }
+    .proj-body { display: flex; flex-direction: column; flex: 1; padding: 14px 22px 22px; min-width: 0; }
+    .proj-meta-row { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .proj-label { font-family: var(--mono); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--blue); }
+    .proj-date { font-family: var(--mono); font-size: 0.65rem; color: var(--muted); margin-left: auto; }
+    .proj-title { font-size: 1.12rem; font-weight: 600; letter-spacing: -0.025em; margin-bottom: 10px; }
+    .proj-points { flex: 1; list-style: none; margin-bottom: 18px; }
+    .proj-points li { font-size: 0.88rem; line-height: 1.75; margin-bottom: 8px; }
+    .proj-footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding-top: 14px; border-top: 1px solid var(--border); }
+    .proj-tag { font-family: var(--mono); font-size: 0.65rem; padding: 3px 6px; }
+    .proj-link { color: var(--blue); font-size: 0.8rem; font-weight: 500; text-decoration: none; white-space: nowrap; }
+    .proj-link:hover { text-decoration: underline; }
+    .github-btn-wrap { text-align: right; }
+
+    .skill-groups { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+    .skill-group { min-width: 0; padding: 20px; border: 1px solid var(--border); border-radius: 10px; background: var(--bg2); }
+    .skill-group-title { font-size: 0.86rem; font-weight: 600; margin-bottom: 12px; }
+    .skill-sub-label { color: var(--muted); font-size: 0.72rem; margin-bottom: 10px; }
+    .pill { font-family: var(--mono); font-size: 0.68rem; color: var(--text); }
+    .pill.blue { border-color: #365986; color: #b9d5ff; }
+
+    .resume-goals { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin-bottom: 28px; }
+    .goal-card { padding-left: 16px; border-left: 2px solid #345d91; }
+    .goal-card h4 { color: var(--blue); font-family: var(--mono); font-size: 0.7rem; font-weight: 400; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
+    .goal-card p { color: var(--muted); font-size: 0.86rem; line-height: 1.75; }
+    .resume-details { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 24px; }
+    .resume-details > div { min-width: 0; }
+    .edu-card, .cert-item { padding: 20px; border: 1px solid var(--border); border-radius: 10px; background: var(--bg2); }
+    .edu-header { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 14px; }
+    .edu-school { font-size: 1rem; font-weight: 600; margin-bottom: 4px; }
+    .edu-degree { color: var(--muted); font-size: 0.85rem; }
+    .edu-date, .cert-year { color: var(--blue); font-family: var(--mono); font-size: 0.7rem; white-space: nowrap; }
+    .edu-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+    .edu-chip { color: #b6d4ff; font-size: 0.72rem; padding: 3px 8px; border: 1px solid #2a456a; border-radius: 4px; background: var(--blue-glow); }
+    .edu-notes { list-style: none; }
+    .edu-notes li { font-size: 0.8rem; line-height: 1.7; }
+    .certs-list { display: flex; flex-direction: column; gap: 12px; }
+    .cert-item { display: flex; align-items: flex-start; gap: 16px; }
+    .cert-name { font-size: 0.92rem; font-weight: 600; margin-bottom: 8px; }
+    .cert-desc { color: var(--muted); font-size: 0.85rem; line-height: 1.75; }
+
+    .activity-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+    .activity-card { min-width: 0; padding: 22px; border: 1px solid var(--border); border-radius: 10px; background: var(--bg2); }
+    .activity-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+    .activity-title { font-size: 0.96rem; font-weight: 600; }
+    .activity-date { font-family: var(--mono); font-size: 0.68rem; color: var(--muted); white-space: nowrap; }
+    .activity-body { color: var(--muted); font-size: 0.86rem; line-height: 1.8; margin-bottom: 16px; }
+
+    .contact-intro { color: var(--muted); font-size: 0.9rem; margin-top: -12px; margin-bottom: 20px; }
+    .contact-items { display: flex; flex-wrap: wrap; gap: 12px; }
+    .contact-item { display: flex; align-items: center; flex: 1 1 210px; min-width: 0; gap: 12px; padding: 16px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg2); color: var(--text); text-decoration: none; }
+    a.contact-item:hover { border-color: var(--blue); }
+    .contact-item > div { min-width: 0; }
+    .contact-icon { flex-shrink: 0; font-size: 1.1rem; }
+    .contact-label { color: var(--muted); font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 4px; }
+    .contact-val { font-size: 0.78rem; overflow-wrap: anywhere; }
+    .thanks-line { margin-top: 24px; color: var(--muted); font-size: 0.8rem; }
+
+    footer { border-top: 1px solid var(--border); color: var(--muted); font-size: 0.75rem; }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 22px; }
+    footer a { text-decoration: none; }
+    .back-top { position: fixed; bottom: 20px; right: 20px; width: 40px; height: 40px; border: 1px solid #45658b; border-radius: 8px; color: var(--text); background: var(--bg2); cursor: pointer; opacity: 0; visibility: hidden; transition: opacity 0.2s; }
+    .back-top.visible { opacity: 1; visibility: visible; }
+
+    @media (max-width: 1100px) {
+      .nav-menu { gap: 0; }
+      .nav-menu a { padding-inline: 9px; }
+      .skill-groups { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .work-item { grid-template-columns: 200px minmax(0, 1fr); gap: 0 24px; }
     }
 
-    .proj-meta-row {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      margin-bottom: 0.7rem;
-      flex-wrap: wrap;
+    @media (max-width: 900px) {
+      .hamburger { display: flex; }
+      .nav-menu { display: none; position: absolute; top: 68px; left: 0; right: 0; padding: 10px; background: var(--bg2); border: 1px solid var(--border); border-radius: 0 0 10px 10px; box-shadow: 0 18px 32px rgba(0, 0, 0, 0.25); }
+      .nav-menu.open { display: flex; flex-direction: column; }
+      .nav-menu a { padding: 10px 12px; font-size: 0.9rem; }
+      .hero-inner { grid-template-columns: minmax(0, 1fr) 200px; gap: 24px; }
+      .hero-avatar-wrap { padding: 16px; }
+      .work-item { grid-template-columns: 1fr; gap: 16px; }
+      .work-header { grid-row: auto; }
+      .work-project, .work-points, .work-tags { grid-column: 1; margin-bottom: 0; }
+      .work-role-line { flex-direction: row; flex-wrap: wrap; gap: 6px 12px; align-items: baseline; }
+      .resume-details { grid-template-columns: 1fr; }
     }
 
-    .proj-label {
-      font-size: 0.68rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      padding: 0.15rem 0.5rem;
-      border-radius: 3px;
-      font-weight: 600;
+    @media (max-width: 600px) {
+      section { padding-block: 30px; }
+      #home { padding-block: 32px; }
+      .hero-inner { grid-template-columns: 1fr; grid-template-areas: 'profile' 'intro'; gap: 22px; }
+      .hero-avatar-wrap { border-left: 0; padding: 0; display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 4px 14px; align-items: center; }
+      .hero-avatar { width: 72px; height: 72px; border-radius: 14px; grid-row: 1 / span 2; }
+      .hero-badge { align-self: end; }
+      .profile-location { align-self: start; font-size: 0.72rem; }
+      .hero-eyebrow { font-size: 0.62rem; margin-bottom: 10px; }
+      .hero-name { font-size: clamp(2rem, 8vw, 2.7rem); }
+      .hero-role { font-size: 1rem; }
+      .hero-bio { font-size: 0.92rem; }
+      .section-title { font-size: 1.2rem; gap: 10px; margin-bottom: 20px; }
+      .section-title .num { font-size: 0.65rem; }
+      .section-title::after { flex: 1; width: auto; }
+      .projects-grid, .activity-grid, .resume-goals { grid-template-columns: 1fr; gap: 16px; }
+      .proj-body { padding: 12px 18px 18px; }
+      .proj-img { padding: 18px 18px 0; }
+      .skill-groups { gap: 10px; }
+      .skill-group { padding: 14px; }
+      .skill-group-title { font-size: 0.8rem; }
+      .pill { font-size: 0.62rem; padding: 3px 6px; }
+      .activity-card { padding: 18px; }
+      .edu-card, .cert-item { padding: 16px; }
+      .cert-item { gap: 12px; }
+      .footer-inner { flex-direction: column; align-items: flex-start; gap: 5px; }
+      .back-top { bottom: 12px; right: 12px; }
     }
 
-    .proj-label-blue {
-      background: rgba(47, 129, 247, 0.15);
-      color: #79c0ff;
-      border: 1px solid rgba(47, 129, 247, 0.3);
+    @media (max-width: 360px) {
+      .skill-groups { grid-template-columns: 1fr; }
+      .hero-links { gap: 8px; }
+      .btn { padding-inline: 12px; }
+      .proj-date { margin-left: 0; }
     }
 
-    .proj-label-green {
-      background: rgba(63, 185, 80, 0.1);
-      color: #56d364;
-      border: 1px solid rgba(63, 185, 80, 0.3);
-    }
-
-    .proj-date {
-      font-family: 'Fira Code', monospace;
-      font-size: 0.7rem;
-      color: var(--muted);
-      margin-left: auto;
-    }
-
-    .proj-title {
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--white);
-      margin-bottom: 0.7rem;
-      line-height: 1.4;
-    }
-
-    .proj-points {
-      list-style: none;
-      flex: 1;
-      margin-bottom: 1rem;
-    }
-
-    .proj-points li {
-      font-size: 0.83rem;
-      color: var(--muted);
-      padding: 0.25rem 0 0.25rem 1.1rem;
-      position: relative;
-      line-height: 1.6;
-    }
-
-    .proj-points li::before {
-      content: '▸';
-      position: absolute;
-      left: 0;
-      color: var(--blue);
-      font-size: 0.7rem;
-      top: 0.35rem;
-    }
-
-    .proj-points li strong {
-      color: var(--text);
-    }
-
-    .proj-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-
-    .proj-tags-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.3rem;
-    }
-
-    .proj-tag {
-      font-family: 'Fira Code', monospace;
-      font-size: 0.65rem;
-      padding: 0.15rem 0.45rem;
-      border-radius: 3px;
-      background: var(--bg3);
-      border: 1px solid var(--border);
-      color: var(--muted);
-    }
-
-    .proj-link {
-      font-size: 0.8rem;
-      color: var(--blue);
-      text-decoration: none;
-      font-weight: 500;
-    }
-
-    .proj-link:hover {
-      text-decoration: underline;
-    }
-
-    .github-btn-wrap {
-      text-align: center;
-    }
-
-    /* ACTIVITIES */
-    #activities {
-      border-top: 1px solid var(--border);
-    }
-
-    .activity-card {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 2rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .activity-header {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 1rem;
-      margin-bottom: 1rem;
-    }
-
-    .activity-title {
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: var(--white);
-    }
-
-    .activity-date {
-      font-family: 'Fira Code', monospace;
-      font-size: 0.78rem;
-      color: var(--blue);
-      white-space: nowrap;
-    }
-
-    .activity-body {
-      font-size: 0.9rem;
-      color: var(--muted);
-      line-height: 1.8;
-      margin-bottom: 1.2rem;
-    }
-
-    .activity-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-    }
-
-    .activity-tag {
-      font-size: 0.72rem;
-      padding: 0.2rem 0.55rem;
-      border-radius: 4px;
-      background: var(--bg3);
-      border: 1px solid var(--border);
-      color: var(--muted);
-    }
-
-    /* CONTACT */
-    #contact {
-      border-top: 1px solid var(--border);
-      text-align: center;
-    }
-
-    .contact-intro {
-      font-size: 0.95rem;
-      color: var(--muted);
-      max-width: 480px;
-      margin: 0 auto 2.5rem;
-      line-height: 1.7;
-    }
-
-    .contact-items {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-bottom: 3rem;
-    }
-
-    .contact-item {
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 1.2rem 1.6rem;
-      text-decoration: none;
-      color: var(--text);
-      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
-      min-width: 220px;
-    }
-
-    .contact-item:hover {
-      border-color: var(--blue);
-      box-shadow: 0 0 16px var(--blue-glow);
-      transform: translateY(-2px);
-    }
-
-    .contact-icon {
-      font-size: 1.3rem;
-      flex-shrink: 0;
-    }
-
-    .contact-label {
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--muted);
-      margin-bottom: 0.1rem;
-    }
-
-    .contact-val {
-      font-size: 0.88rem;
-    }
-
-    .thanks-line {
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: var(--blue);
-      margin-bottom: 1rem;
-    }
-
-    /* FOOTER */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 1.5rem 5%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 0.78rem;
-      color: var(--muted);
-    }
-
-    footer a {
-      color: var(--blue);
-      text-decoration: none;
-    }
-
-    .back-top {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: var(--blue);
-      color: #fff;
-      border: none;
-      cursor: pointer;
-      font-size: 1rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      transition: opacity 0.3s, transform 0.2s;
-      box-shadow: 0 4px 16px rgba(47, 129, 247, 0.4);
-    }
-
-    .back-top.visible {
-      opacity: 1;
-    }
-
-    .back-top:hover {
-      transform: translateY(-3px);
-    }
-
-    /* REVEAL */
-    .reveal {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-
-    .reveal.visible {
-      opacity: 1;
-      transform: none;
-    }
-
-    @media(max-width:768px) {
-      .nav-menu {
-        display: none;
-        flex-direction: column;
-        position: absolute;
-        top: 64px;
-        left: 0;
-        right: 0;
-        background: var(--bg2);
-        border-bottom: 1px solid var(--border);
-        padding: 1rem 0;
-      }
-
-      .nav-menu.open {
-        display: flex;
-      }
-
-      .nav-menu a {
-        height: auto;
-        line-height: 2;
-        padding: 0.4rem 5%;
-        border: none;
-      }
-
-      .hamburger {
-        display: flex;
-      }
-
-      .hero-inner {
-        flex-direction: column;
-        text-align: center;
-        gap: 2.5rem;
-      }
-
-      .hero-links {
-        justify-content: center;
-      }
-
-      .resume-goals {
-        grid-template-columns: 1fr;
-      }
-
-      .edu-header {
-        flex-direction: column;
-      }
-
-      footer {
-        flex-direction: column;
-        gap: 0.5rem;
-        text-align: center;
-      }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation: none !important; transition: none !important; }
     }
   </style>
 </head>
 
 <body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
 
-  <nav>
+  <nav aria-label="Main navigation">
+    <div class="nav-inner">
     <a class="nav-brand" href="#home">ChauGiaKiet</a>
     <ul class="nav-menu" id="navMenu">
       <li><a href="#home">Home</a></li>
-      <li><a href="#skillset">Skillset</a></li>
-      <li><a href="#resume">Resume</a></li>
-      <li><a href="#work">Work Experience</a></li>
+      <li><a href="#work">Experience</a></li>
       <li><a href="#projects">Projects</a></li>
+      <li><a href="#skillset">Skills</a></li>
+      <li><a href="#resume">Resume</a></li>
       <li><a href="#activities">Activities</a></li>
-      <li><a href="#contact">Contact</a></li>
+      <li><a href="#contact">Let's talk ↗</a></li>
     </ul>
-    <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <button class="hamburger" id="hamburger" type="button" aria-label="Open menu"
+      aria-expanded="false" aria-controls="navMenu" onclick="toggleMenu()">
       <span></span><span></span><span></span>
+    </button>
     </div>
   </nav>
 
+  <main id="main-content" class="page-shell" tabindex="-1">
   <section id="home">
     <div class="hero-inner">
       <div class="hero-avatar-wrap">
         <div class="hero-avatar">
-          <img src="IMG_1249.JPG" alt="Avatar"
-            style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
+          <img src="IMG_1249.JPG" alt="Chau Gia Kiet" width="128" height="128">
         </div>
-        <div class="hero-badge">Open to Work</div>
+        <div class="hero-badge">Open to work</div>
+        <p class="profile-location">Ho Chi Minh City, Vietnam</p>
       </div>
       <div class="hero-text">
+        <p class="hero-eyebrow">Applied AI · Computer Vision · Agentic Systems</p>
         <h1 class="hero-name">Chau <span>Gia Kiet</span></h1>
-        <div class="hero-typing-wrap">
-          <span class="prefix">I am a </span><span id="typingText"></span><span class="typing-cursor">|</span>
-        </div>
+        <p class="hero-role">Data &amp; AI Engineer</p>
         <p class="hero-bio">
-          Final-year <strong>Data Science student</strong> at VNUHCM University of Science with a strong foundation in
-          mathematics, machine learning, and data analysis.
-          Experienced in building <strong>AI applications</strong> — from Agentic AI, multi-agent workflows and RAG pipelines to CV
-          systems and deployed ML models.
-          <br /><br />
+          Data &amp; AI Engineer specializing in <strong>Computer Vision</strong>, Agentic AI, RAG pipelines, and
+          end-to-end LLM applications.
           I turn complex AI capabilities into <strong>measurable, working systems</strong> — not just experiments.
         </p>
         <div class="hero-links">
-          <a class="btn btn-filled" href="https://github.com/chkiet253" target="_blank">GitHub ↗</a>
-          <a class="btn btn-outline" href="https://www.linkedin.com/in/kiet-chau-8b889931a/" target="_blank">LinkedIn
+          <a class="btn btn-filled" href="#projects">Explore projects ↓</a>
+          <a class="btn btn-outline" href="https://github.com/chkiet253" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+          <a class="text-link" href="https://www.linkedin.com/in/kiet-chau-8b889931a/" target="_blank" rel="noopener noreferrer">LinkedIn
             ↗</a>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="skillset">
-    <h2 class="section-title reveal"><span class="num">01.</span> Skillset</h2>
-    <div class="skill-groups reveal">
-      <div class="skill-group">
-        <div class="skill-group-title">🤖 AI / LLM</div>
-        <div class="skill-sub">
-          <div class="skill-sub-label">Frameworks & Protocols</div>
-          <div class="skill-pills"><span class="pill blue">Google A2A</span><span class="pill blue">RAG</span><span
-              class="pill blue">Gemini LLM</span><span class="pill">LangChain</span></div>
-        </div>
-        <div class="skill-sub">
-          <div class="skill-sub-label">Techniques</div>
-          <div class="skill-pills"><span class="pill">Multi-Agent</span><span class="pill">Tool Calling</span><span
-              class="pill">SSE Streaming</span><span class="pill">Prompt Eng.</span></div>
-        </div>
-      </div>
-      <div class="skill-group">
-        <div class="skill-group-title">🧠 Machine Learning</div>
-        <div class="skill-sub">
-          <div class="skill-sub-label">Algorithms</div>
-          <div class="skill-pills"><span class="pill blue">XGBoost</span><span class="pill blue">Random
-              Forest</span><span class="pill">Logistic Reg.</span><span class="pill">SVM</span></div>
-        </div>
-        <div class="skill-sub">
-          <div class="skill-sub-label">Libraries</div>
-          <div class="skill-pills"><span class="pill">scikit-learn</span><span class="pill">PyTorch</span><span
-              class="pill">Librosa</span><span class="pill">SMOTE</span></div>
-        </div>
-      </div>
-      <div class="skill-group">
-        <div class="skill-group-title">👁️ Computer Vision</div>
-        <div class="skill-sub">
-          <div class="skill-sub-label">Tools & Models</div>
-          <div class="skill-pills"><span class="pill blue">YOLOv8</span><span class="pill blue">OpenCV</span><span
-              class="pill">Contour Detect.</span></div>
-        </div>
-        <div class="skill-sub">
-          <div class="skill-sub-label">Techniques</div>
-          <div class="skill-pills"><span class="pill">Object Detection</span><span class="pill">Segmentation</span><span
-              class="pill">Perspective Tx.</span></div>
-        </div>
-      </div>
-      <div class="skill-group">
-        <div class="skill-group-title">📊 Data & Analytics</div>
-        <div class="skill-sub">
-          <div class="skill-sub-label">Languages</div>
-          <div class="skill-pills"><span class="pill blue">Python</span><span class="pill blue">R</span><span
-              class="pill">C/C++</span><span class="pill">Java</span></div>
-        </div>
-        <div class="skill-sub">
-          <div class="skill-sub-label">Viz & BI</div>
-          <div class="skill-pills"><span class="pill">Pandas</span><span class="pill">Matplotlib</span><span
-              class="pill">Seaborn</span><span class="pill">Power BI</span></div>
-        </div>
-      </div>
-      <div class="skill-group">
-        <div class="skill-group-title">🗄️ Databases</div>
-        <div class="skill-sub">
-          <div class="skill-sub-label">Relational</div>
-          <div class="skill-pills"><span class="pill blue">PostgreSQL</span><span class="pill blue">MySQL</span><span
-              class="pill">SQL Server</span></div>
-        </div>
-        <div class="skill-sub">
-          <div class="skill-sub-label">NoSQL</div>
-          <div class="skill-pills"><span class="pill">MongoDB</span></div>
-        </div>
-      </div>
-      <div class="skill-group">
-        <div class="skill-group-title">🛠️ Tools & Deployment</div>
-        <div class="skill-sub">
-          <div class="skill-sub-label">Dev Tools</div>
-          <div class="skill-pills"><span class="pill blue">Git / GitHub</span><span class="pill">Jupyter</span><span
-              class="pill">LaTeX</span></div>
-        </div>
-        <div class="skill-sub">
-          <div class="skill-sub-label">Deployment</div>
-          <div class="skill-pills"><span class="pill">Streamlit</span><span class="pill">Google Sheets API</span></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="resume">
-    <h2 class="section-title reveal"><span class="num">02.</span> Resume</h2>
-
-    <div class="resume-goals reveal">
-      <div class="goal-card">
-        <h4>Short-term Goal</h4>
-        <p>Seeking an AI Engineer or Data Engineer role to apply LLM, RAG, and ML skills in building intelligent,
-          production-ready systems with measurable business impact.</p>
-      </div>
-      <div class="goal-card">
-        <h4>Long-term Goal</h4>
-        <p>To become an AI systems architect who designs scalable generative AI platforms — turning cutting-edge
-          research into reliable products that drive real-world decisions.</p>
-      </div>
-    </div>
-
-    <h3 class="sub-heading reveal">Education</h3>
-    <div class="edu-card reveal">
-      <div class="edu-header">
-        <div>
-          <div class="edu-school">VNUHCM — University of Science</div>
-          <div class="edu-degree">Bachelor of Science in Mathematics &amp; Computer Science<br />Specialization:
-            <strong>Data Science</strong></div>
-        </div>
-        <div class="edu-date">10/2022 – Present</div>
-      </div>
-      <div class="edu-chips">
-        <span class="edu-chip">GPA 8.2 / 10</span>
-        <span class="edu-chip">3.4 / 4.0</span>
-        <span class="edu-chip">VSTEP B2 English</span>
-      </div>
-      <ul class="edu-notes">
-        <li>Relevant Coursework: Calculus, Machine Learning, Data Mining, Statistics, Database Systems, Deep Learning.
-        </li>
-      </ul>
-    </div>
-
-    <h3 class="sub-heading reveal">Certificates</h3>
-    <div class="certs-list reveal">
-      <div class="cert-item">
-        <div class="cert-year">2024</div>
-        <div>
-          <div class="cert-name">VSTEP B2 — English Proficiency</div>
-          <div class="cert-desc">Vietnamese Standardized English Test. Overall B2 (CEFR). Demonstrates professional
-            reading, listening, writing, and speaking competency in English.</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <section id="work">
-    <h2 class="section-title reveal"><span class="num">03.</span> Work Experience</h2>
+    <h2 class="section-title reveal"><span class="num">01.</span> Work Experience</h2>
+    <div class="work-item reveal">
+      <div class="work-header">
+        <!-- Official asset: https://hqsoft.com.vn/wp-content/uploads/2023/03/HQSOFT-Logo-tagline.png -->
+        <a class="work-logo work-logo-brand" href="https://hqsoft.com.vn/vi/trang-chu/"
+          target="_blank" rel="noopener noreferrer" aria-label="Visit HQSOFT website">
+          <img src="assets/companies/hqsoft.png" alt="HQSOFT logo" width="76" height="40" decoding="async">
+        </a>
+        <div>
+          <div class="work-company">HQSOFT</div>
+          <div class="work-role-line">
+            <span class="work-role">AI Engineer Intern</span>
+            <span class="work-date">05/2026 – 08/2026</span>
+          </div>
+        </div>
+      </div>
+      <div class="work-project">RAG, Computer Vision &amp; Data Pipelines</div>
+      <ul class="work-points">
+        <li>Developed a <strong>RAG module</strong> for document Q&amp;A using structure-aware chunking, hybrid semantic/BM25 retrieval with Reciprocal Rank Fusion, and citation-grounded generation with validation and feedback-driven retries.</li>
+        <li>Built a <strong>YOLO11 auto-labeling and versioned training pipeline</strong> to generate bounding-box suggestions, incorporate corrected annotations, and retrain on accumulated labeled data through CLI and API interfaces.</li>
+        <li>Implemented an <strong>ETL pipeline</strong> for Kenvue-to-Xspire data integration, handling missing data and referential integrity; developed a sales route optimization prototype using Valhalla, nearest-neighbor, and 2-opt.</li>
+      </ul>
+      <div class="work-tags">
+        <span class="work-tag">RAG</span><span class="work-tag">BM25</span><span class="work-tag">YOLO11</span><span
+          class="work-tag">ETL</span><span class="work-tag">Python</span>
+      </div>
+    </div>
+
+    <div class="work-item reveal">
+      <div class="work-header">
+        <!-- Official asset: https://dizim.vn/logo.png -->
+        <a class="work-logo work-logo-brand" href="https://dizim.vn/"
+          target="_blank" rel="noopener noreferrer" aria-label="Visit DIZIM website">
+          <img src="assets/companies/dizim.png" alt="DIZIM logo" width="76" height="40" decoding="async">
+        </a>
+        <div>
+          <div class="work-company">DIZIM</div>
+          <div class="work-role-line">
+            <span class="work-role">AI Engineer Intern (Part-time)</span>
+            <span class="work-date">05/2026 – 07/2026</span>
+          </div>
+        </div>
+      </div>
+      <div class="work-project">AI-Livestream — LLM Sales Content &amp; Product Data</div>
+      <ul class="work-points">
+        <li>Built <strong>LLM-powered sales script generation</strong> with prompts tailored to product details, tone, and language across <strong>12 segment types</strong>, integrated with <strong>FastAPI</strong> and <strong>React</strong> for content review and editing.</li>
+        <li>Standardized <strong>4 e-commerce product data formats</strong> and developed asynchronous script orchestration with segment selection, bounded LLM concurrency, and consistent content ordering.</li>
+      </ul>
+      <div class="work-tags">
+        <span class="work-tag">LLM</span><span class="work-tag">FastAPI</span><span class="work-tag">React</span><span
+          class="work-tag">Prompt Engineering</span><span class="work-tag">Async Orchestration</span>
+      </div>
+    </div>
+
     <div class="work-item reveal">
       <div class="work-header">
         <div class="work-logo">🏥</div>
@@ -1261,8 +522,8 @@
   </section>
 
   <section id="projects">
-    <h2 class="section-title reveal"><span class="num">04.</span> Projects</h2>
-    <p class="projects-intro reveal">Selected projects showcasing Computer Vision, Machine Learning, and applied AI.
+    <h2 class="section-title reveal"><span class="num">02.</span> Projects</h2>
+    <p class="projects-intro reveal">Selected projects showcasing Computer Vision and Machine Learning.
       Click <em>View More</em> to see full reports on GitHub.</p>
 
     <div class="projects-grid reveal">
@@ -1271,18 +532,18 @@
         <div class="proj-body">
           <div class="proj-meta-row">
             <span class="proj-label proj-label-blue">Computer Vision</span>
-            <span class="proj-date">2025 · 2.5 months</span>
+            <span class="proj-date">11/2024 – 01/2025</span>
           </div>
-          <div class="proj-title">Football Video Tracking and Analytics Pipeline</div>
+          <div class="proj-title">CV-Football-Pipeline</div>
           <ul class="proj-points">
-            <li>Built an end-to-end object tracking and data extraction pipeline using fine-tuned computer vision models, achieving <strong>95.2% mAP@50 and 97.9% precision</strong> while handling edge-case tracking failures under fast motion blur.</li>
-            <li>Developed a full-stack media processing engine integrating OpenCV for automated image segmentation, real-time object detection (using K-Means for cluster isolation), and pixel-level tracking via optical flow.</li>
-            <li>Applied perspective transformation and homography matrices to map 2D pixel coordinates onto a normalized coordinate system, converting unstructured video streams into structured time-series data (speeds, vector trajectories).</li>
+            <li>Fine-tuned YOLO and applied K-Means color quantization for robust Multi-Object Tracking (MOT), achieving <strong>95.2% mAP@50 and 97.9% precision</strong>.</li>
+            <li>Computed optical flow and Homography matrices to project 2D video pixels into real-world coordinates, extracting structured kinematic time-series (velocity, trajectories).</li>
           </ul>
           <div class="proj-footer">
-            <div class="proj-tags-row"><span class="proj-tag">YOLOv8</span><span class="proj-tag">OpenCV</span><span class="proj-tag">K-Means</span><span class="proj-tag">Python</span></div>
+            <div class="proj-tags-row"><span class="proj-tag">Python</span><span class="proj-tag">OpenCV</span><span
+                class="proj-tag">YOLO</span><span class="proj-tag">Scikit-learn</span></div>
             <a class="proj-link" href="https://github.com/chkiet253/Football-Image-Processing-with-OpenCV"
-              target="_blank">View More →</a>
+              target="_blank" rel="noopener noreferrer">View More →</a>
           </div>
         </div>
       </div>
@@ -1292,52 +553,127 @@
         <div class="proj-body">
           <div class="proj-meta-row">
             <span class="proj-label proj-label-blue">ML + Audio</span>
-            <span class="proj-date">2024 · 2 months</span>
+            <span class="proj-date">11/2024 – 01/2025</span>
           </div>
-          <div class="proj-title">Audio Feature Extraction and Recommendation App</div>
+          <div class="proj-title">Music-Classifier</div>
           <ul class="proj-points">
-            <li>Architected an ETL audio processing pipeline using Librosa to perform acoustic feature engineering on <strong>1,000 GTZAN tracks</strong>, converting raw audio files into visual Mel Spectrogram matrices.</li>
-            <li>Developed and trained a custom Convolutional Neural Network (CNN) feature extractor combined with an optimized ensemble classifier, achieving an <strong>88% multi-class classification accuracy</strong> (Macro-F1 = 0.87).</li>
-            <li>Built and deployed a production-ready, interactive web application using Streamlit, integrating a vector-based cosine similarity engine for real-time recommendation querying.</li>
+            <li>Engineered a DSP pipeline extracting Mel Spectrograms from <strong>1,000 tracks</strong> to train a hybrid CNN-XGBoost architecture, achieving <strong>88% multi-class accuracy</strong>.</li>
+            <li>Mapped latent audio signatures into a high-dimensional vector space to build a cosine similarity retrieval engine for real-time music recommendations.</li>
           </ul>
           <div class="proj-footer">
-            <div class="proj-tags-row"><span class="proj-tag">CNN</span><span class="proj-tag">XGBoost</span><span class="proj-tag">Librosa</span><span class="proj-tag">Streamlit</span></div>
+            <div class="proj-tags-row"><span class="proj-tag">Python</span><span class="proj-tag">TensorFlow</span><span
+                class="proj-tag">XGBoost</span><span class="proj-tag">Librosa</span></div>
             <a class="proj-link" href="https://github.com/chkiet253/music_genre_classification_streamlit"
-              target="_blank">View More →</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="proj-card">
-        <div class="proj-img">🏃</div>
-        <div class="proj-body">
-          <div class="proj-meta-row">
-            <span class="proj-label proj-label-green">Data Analysis</span>
-            <span class="proj-date">2024 · 1.5 months</span>
-          </div>
-          <div class="proj-title">High-Dimensional Body Performance Analytics</div>
-          <ul class="proj-points">
-            <li>Built predictive modeling workflows for multi-class classification across <strong>13,393 unique records</strong>, implementing advanced features like SMOTE for data imbalance resolution and ANOVA statistical feature selection (p &lt; 2.2 × 10<sup>-16</sup>).</li>
-            <li>Engineered an optimized gradient boosted tree classification model (XGBoost) achieving a peak accuracy of <strong>73.38%</strong> (Macro-F1 = 0.739, Kappa = 0.644), significantly outperforming the baseline Logistic Regression model by ≈ 12%.</li>
-          </ul>
-          <div class="proj-footer">
-            <div class="proj-tags-row"><span class="proj-tag">XGBoost</span><span class="proj-tag">SMOTE</span><span
-                class="proj-tag">ANOVA</span></div>
-            <a class="proj-link" href="https://github.com/chkiet253/body_performance_analysis" target="_blank">View More
-              →</a>
+              target="_blank" rel="noopener noreferrer">View More →</a>
           </div>
         </div>
       </div>
     </div>
 
     <div class="github-btn-wrap reveal">
-      <a class="btn btn-outline" href="https://github.com/chkiet253" target="_blank">View More on GitHub ↗</a>
+      <a class="btn btn-outline" href="https://github.com/chkiet253" target="_blank" rel="noopener noreferrer">View More on GitHub ↗</a>
+    </div>
+  </section>
+
+  <section id="skillset">
+    <h2 class="section-title reveal"><span class="num">03.</span> Technical skills</h2>
+    <div class="skill-groups reveal">
+      <div class="skill-group">
+        <div class="skill-group-title">💻 Languages</div>
+        <div class="skill-sub">
+          <div class="skill-sub-label">Programming</div>
+          <div class="skill-pills"><span class="pill blue">Python</span><span class="pill blue">SQL</span><span
+              class="pill">C/C++</span><span class="pill">R</span></div>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">🧠 AI / ML</div>
+        <div class="skill-sub">
+          <div class="skill-sub-label">Libraries &amp; Models</div>
+          <div class="skill-pills"><span class="pill blue">PyTorch</span><span class="pill">Scikit-learn</span><span
+              class="pill">XGBoost</span><span class="pill">OpenCV</span><span class="pill">Transformers</span></div>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">🤖 LLM / Agents</div>
+        <div class="skill-sub">
+          <div class="skill-sub-label">Frameworks &amp; Protocols</div>
+          <div class="skill-pills"><span class="pill blue">LangChain</span><span class="pill blue">LangGraph</span><span
+              class="pill">RAG</span><span class="pill">Google A2A</span><span class="pill">LangSmith</span></div>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">🛠️ Data / Backend</div>
+        <div class="skill-sub">
+          <div class="skill-sub-label">Databases &amp; Deployment</div>
+          <div class="skill-pills"><span class="pill blue">PostgreSQL</span><span class="pill">MySQL</span><span
+              class="pill">MongoDB</span><span class="pill">FastAPI</span><span class="pill">Docker</span><span
+              class="pill">Git / GitHub</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="resume">
+    <h2 class="section-title reveal"><span class="num">04.</span> Resume</h2>
+
+    <div class="resume-goals reveal">
+      <div class="goal-card">
+        <h4>Short-term Goal</h4>
+        <p>Seeking an AI Engineer or Data Engineer role to apply LLM, RAG, and ML skills in building intelligent,
+          production-ready systems with measurable business impact.</p>
+      </div>
+      <div class="goal-card">
+        <h4>Long-term Goal</h4>
+        <p>To become an AI systems architect who designs scalable generative AI platforms — turning cutting-edge
+          research into reliable products that drive real-world decisions.</p>
+      </div>
+    </div>
+
+    <div class="resume-details">
+    <div>
+    <h3 class="sub-heading reveal">Education</h3>
+    <div class="edu-card reveal">
+      <div class="edu-header">
+        <div>
+          <div class="edu-school">VNUHCM — University of Science</div>
+          <div class="edu-degree">Bachelor of Science in Mathematics &amp; Computer Science<br />Specialization:
+            <strong>Data Science</strong></div>
+        </div>
+        <div class="edu-date">2022 – Present</div>
+      </div>
+      <div class="edu-chips">
+        <span class="edu-chip">GPA 8.2 / 10</span>
+        <span class="edu-chip">3.4 / 4.0</span>
+        <span class="edu-chip">VSTEP B2 English</span>
+      </div>
+      <ul class="edu-notes">
+        <li>Relevant Coursework: Calculus, Machine Learning, Data Mining, Statistics, Database Systems, Deep Learning.
+        </li>
+      </ul>
+    </div>
+
+    </div>
+    <div>
+    <h3 class="sub-heading reveal">Certificates</h3>
+    <div class="certs-list reveal">
+      <div class="cert-item">
+        <div class="cert-year">2024</div>
+        <div>
+          <div class="cert-name">VSTEP B2 — English Proficiency</div>
+          <div class="cert-desc">Vietnamese Standardized English Test. Overall B2 (CEFR). Demonstrates professional
+            reading, listening, writing, and speaking competency in English.</div>
+        </div>
+      </div>
+    </div>
+    </div>
     </div>
   </section>
 
   <section id="activities">
     <h2 class="section-title reveal"><span class="num">05.</span> Activities</h2>
 
+    <div class="activity-grid">
     <div class="activity-card reveal">
       <div class="activity-header">
         <div class="activity-title">Academic &amp; Collaborative Projects</div>
@@ -1376,11 +712,12 @@
         <span class="activity-tag">Side Projects</span>
       </div>
     </div>
+    </div>
   </section>
 
   <section id="contact">
     <h2 class="section-title reveal"><span class="num">06.</span> Contact</h2>
-    <p class="contact-intro reveal">Below are the details to reach out to me</p>
+    <p class="contact-intro reveal">Have a role or an AI project in mind? Get in touch.</p>
     <div class="contact-items reveal">
       <a class="contact-item" href="tel:+84814095557">
         <span class="contact-icon">📱</span>
@@ -1396,14 +733,14 @@
           <div class="contact-val">chkiet253@gmail.com</div>
         </div>
       </a>
-      <a class="contact-item" href="https://www.linkedin.com/in/kiet-chau-8b889931a/" target="_blank">
+      <a class="contact-item" href="https://www.linkedin.com/in/kiet-chau-8b889931a/" target="_blank" rel="noopener noreferrer">
         <span class="contact-icon">💼</span>
         <div>
           <div class="contact-label">LinkedIn</div>
           <div class="contact-val">kiet-chau-8b889931a</div>
         </div>
       </a>
-      <a class="contact-item" href="https://github.com/chkiet253" target="_blank">
+      <a class="contact-item" href="https://github.com/chkiet253" target="_blank" rel="noopener noreferrer">
         <span class="contact-icon">🐙</span>
         <div>
           <div class="contact-label">GitHub</div>
@@ -1420,33 +757,45 @@
     </div>
     <div class="thanks-line reveal">Thank you very much!</div>
   </section>
+  </main>
 
   <footer>
-    <span>© 2025 <a href="#home">Chau Gia Kiet</a> — All rights reserved.</span>
+    <div class="footer-inner">
+    <span>© 2026 <a href="#home">Chau Gia Kiet</a> — All rights reserved.</span>
     <span>Ho Chi Minh City · AI Engineer</span>
+    </div>
   </footer>
 
-  <button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+  <button class="back-top" id="backTop" type="button" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
   <script>
-    const roles = ['AI Engineer', 'Data Scientist', 'ML Engineer'];
-    let ri = 0, ci = 0, deleting = false;
-    const el = document.getElementById('typingText');
-    function type() {
-      const word = roles[ri];
-      if (!deleting) { el.textContent = word.slice(0, ++ci); if (ci === word.length) { deleting = true; setTimeout(type, 1800); return; } }
-      else { el.textContent = word.slice(0, --ci); if (ci === 0) { deleting = false; ri = (ri + 1) % roles.length; } }
-      setTimeout(type, deleting ? 60 : 100);
+    const menu = document.getElementById('navMenu');
+    const menuButton = document.getElementById('hamburger');
+
+    function setMenu(open) {
+      menu.classList.toggle('open', open);
+      menuButton.setAttribute('aria-expanded', String(open));
+      menuButton.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
     }
-    type();
 
-    function toggleMenu() { document.getElementById('navMenu').classList.toggle('open'); }
-    document.querySelectorAll('.nav-menu a').forEach(a => a.addEventListener('click', () => document.getElementById('navMenu').classList.remove('open')));
+    function toggleMenu() {
+      setMenu(menuButton.getAttribute('aria-expanded') !== 'true');
+    }
 
-    window.addEventListener('scroll', () => { document.getElementById('backTop').classList.toggle('visible', window.scrollY > 400); });
-
-    const obs = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.08 });
-    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+    menu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => setMenu(false)));
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && menuButton.getAttribute('aria-expanded') === 'true') {
+        setMenu(false);
+        menuButton.focus();
+      }
+    });
+    window.matchMedia('(max-width: 900px)').addEventListener('change', () => setMenu(false));
+    const backTop = document.getElementById('backTop');
+    function updateBackTop() {
+      backTop.classList.toggle('visible', window.scrollY > 400);
+    }
+    window.addEventListener('scroll', updateBackTop, { passive: true });
+    updateBackTop();
   </script>
 </body>
 
